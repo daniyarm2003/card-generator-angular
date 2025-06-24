@@ -1,0 +1,12 @@
+<div>
+    <app-default-layout title="Types">
+        <div *ngIf="!cardTypesLoading; else typesLoading">
+            <div>
+                <app-type-display *ngFor="let cardType of cardTypes" [type]="cardType" />
+            </div>
+        </div>
+        <ng-template #typesLoading>
+            Loading...
+        </ng-template>
+    </app-default-layout>
+</div>

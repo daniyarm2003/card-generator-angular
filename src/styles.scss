@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@use '../node_modules/bootstrap/scss/bootstrap.scss';
+
+$paynes-gray: #555b6eff;
+$cambridge-blue: #89b0aeff;
+$mint-green: #bee3dbff;
+$seasalt: #faf9f9ff;
+$apricot: #ffd6baff;
+
+$primary: $cambridge-blue;
+$secondary: $mint-green;
+
+$primary-text-color: $seasalt;
+
+body {
+    background-color: $seasalt;
+}
