@@ -1,4 +1,4 @@
-@use '../node_modules/bootstrap/scss/bootstrap.scss';
+@use '../node_modules/bootstrap/scss/bootstrap.scss' as bootstrap;
 
 $paynes-gray: #555b6eff;
 $cambridge-blue: #89b0aeff;
@@ -10,7 +10,45 @@ $primary: $cambridge-blue;
 $secondary: $mint-green;
 
 $primary-text-color: $seasalt;
+$secondary-text-color: $seasalt;
 
 body {
     background-color: $seasalt;
+}
+
+.btn-primary {
+    @include bootstrap.button-variant($secondary, 
+        darken($primary, 30%), $primary-text-color, 
+        lighten($primary,5%), lighten($primary, 10%), 
+        darken($primary,30%));
+}
+
+.btn-secondary {
+    @include bootstrap.button-variant($secondary, 
+        darken($secondary, 5%), $secondary-text-color, 
+        lighten($secondary,5%), lighten($secondary, 10%), 
+        darken($secondary,30%));
+}
+
+.default-modal {
+    background-color: rgba(0, 0, 0, 0.25);
+
+    .modal-dialog {
+        .modal-content {
+            background-color: $primary;
+
+            .modal-header {
+                border-bottom: 1px solid $primary-text-color;
+
+                h2 {
+                    font-size: 24pt;
+                    color: $primary-text-color;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+                }
+            }
+            .modal-body {
+                color: $primary-text-color;
+            }
+        }
+    }
 }
