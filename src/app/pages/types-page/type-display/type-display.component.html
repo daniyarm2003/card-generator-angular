@@ -1,5 +1,5 @@
 <div class="type-display" [style]="getTypeBackgroundStyle()">
     <span class="type-display-name" [style]="`color: #${type.textColor};`">{{type.name}}</span>
-    <img *ngIf="type.imageFileId" class="type-display-image" [src]="`${backendUrl}/api/files/${type.imageFileId}/content`" />
+    <img class="type-display-image" [src]="getImageUrl()" />
     <button class="btn mb-2 type-display-button" [style]="getButtonStyle()" (click)="handleEditButtonClick()">Edit Type</button>
 </div>

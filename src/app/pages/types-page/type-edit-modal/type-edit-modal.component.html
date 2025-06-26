@@ -6,22 +6,32 @@
                 <button type="button" class="btn-close" (click)="handleClose()"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <span>Preview</span>
+                <app-type-edit-preview [selectedImageUrl]="getDisplayImageUrl()" 
+                    [backgroundColor1]="bgCol1FormControl.value" 
+                    [backgroundColor2]="bgCol2FormControl.value"
+                    [textColor]="textColorFormControl.value"
+                    [typeName]="nameFormControl.value" />
+                <form (submit)="handleSubmit($event)">
                     <div class="mb-3">
                         <label for="typeNameInput">Name</label>
                         <input id="typeNameInput" class="form-control" type="text" [formControl]="nameFormControl" [maxlength]="32" />
                     </div>
                     <div class="mb-3">
-                        <label for="backgroundColorHexCode1Input">Background Gradient Color 1</label>
+                        <label for="backgroundColorHexCode1Input">Inner Background Gradient Color</label>
                         <input id="backgroundColorHexCode1Input" class="form-control" type="color" [formControl]="bgCol1FormControl" />
                     </div>
                     <div class="mb-3">
-                        <label for="backgroundColorHexCode2Input">Background Gradient Color 2</label>
+                        <label for="backgroundColorHexCode2Input">Outer Background Gradient Color</label>
                         <input id="backgroundColorHexCode2Input" class="form-control" type="color" [formControl]="bgCol2FormControl" />
                     </div>
                     <div class="mb-3">
                         <label for="textColorInput">Text Color</label>
                         <input id="textColorInput" class="form-control" type="color" [formControl]="textColorFormControl" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="typeImageInput">Image</label>
+                        <input id="typeImageInput" class="form-control" type="file" (change)="handleImageFileChange($event)" accept="image/*" />
                     </div>
                     <button type="submit" class="btn btn-secondary">Submit</button>
                 </form>

@@ -17,7 +17,7 @@ body {
 }
 
 .btn-primary {
-    @include bootstrap.button-variant($secondary, 
+    @include bootstrap.button-variant($primary, 
         darken($primary, 30%), $primary-text-color, 
         lighten($primary,5%), lighten($primary, 10%), 
         darken($primary,30%));

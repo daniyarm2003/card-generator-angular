@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTypeDTO } from '../../../types/cardTypeDTO';
-import { environment } from '../../../../environments/environment';
+import { TrackedFileService } from '../../../services/tracked-file.service';
 
 @Component({
   selector: 'app-type-display',
@@ -18,7 +18,7 @@ export class TypeDisplayComponent {
   @Output()
   public editClick: EventEmitter<any> = new EventEmitter();
 
-  public backendUrl = environment.backendBaseUrl;
+  public constructor(private trackedFileService: TrackedFileService) {}
 
   public getTypeBackgroundStyle() {
     return `background: radial-gradient(#${this.type.backgroundColorHexCode1}, #${this.type.backgroundColorHexCode2});`;
@@ -26,6 +26,14 @@ export class TypeDisplayComponent {
 
   public getButtonStyle() {
     return `border: 1px solid #${this.type.textColor}; color: #${this.type.textColor};`;
+  }
+
+  public getImageUrl() {
+    if(this.type.imageFileId) {
+      return this.trackedFileService.getFileDownloadUrl(this.type.imageFileId);
+    }
+
+    return 'https://placehold.co/400';
   }
 
   public handleEditButtonClick() {

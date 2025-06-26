@@ -7,7 +7,7 @@ import { CardTypeCreationDTO, CardTypeDTO } from '../types/cardTypeDTO';
   providedIn: 'root'
 })
 export class CardTypeService {
-  private baseUrl = `${environment.backendBaseUrl}/api/types`;
+  private readonly baseUrl = `${environment.backendBaseUrl}/api/types`;
   
   constructor(private httpClient: HttpClient) { }
 
