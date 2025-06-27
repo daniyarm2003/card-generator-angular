@@ -6,6 +6,7 @@ import { TypeDisplayComponent } from './type-display/type-display.component';
 import { DefaultLayoutComponent } from '../../layouts/default-layout/default-layout.component';
 import { TypeEditModalComponent } from './type-edit-modal/type-edit-modal.component';
 import { AddTypeSubmission } from './utilTypes';
+import { catchError, concat, concatMap, finalize, iif, mergeMap, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-types-page',
@@ -54,18 +55,26 @@ export class TypesPageComponent implements OnInit {
   }
 
   public onAddType({ typeData, imageFile }: AddTypeSubmission) {
-    this.cardTypeService.createCardType(typeData)
-      .subscribe({
-        next: (createdType) => {
-          this.cardTypes.push(createdType);
-        },
-        error: (err) => {
-          window.alert('An error has occurred while trying to create a new type');
-          console.error(err);
-        },
-        complete: () => {
-          this.showEditModal = false;
+    const typeCreation$ = this.cardTypeService.createCardType(typeData);
+
+    typeCreation$.pipe(
+      catchError((err) => {
+        window.alert('An error has occurred while trying to create a new type');
+        return throwError(() => err);
+      }),
+      concatMap((createdType) => {
+        if(!imageFile) {
+          return of(createdType);
         }
-      });
+
+        return this.cardTypeService.updateCardTypeImage(createdType.id, imageFile);
+      }),
+      finalize(() => this.showEditModal = false)
+    ).subscribe({
+      next: (createdType) => {
+        this.cardTypes.push(createdType);
+      },
+      error: (err) => console.error(err)
+    });
   }
 }
