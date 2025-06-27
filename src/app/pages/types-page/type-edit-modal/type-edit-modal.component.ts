@@ -127,6 +127,7 @@ export class TypeEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
     if(this.cardType) {
       this.onEditType.emit({
+        editingType: this.cardType,
         typeData: formData,
         imageFile: this.selectedImageFile
       });

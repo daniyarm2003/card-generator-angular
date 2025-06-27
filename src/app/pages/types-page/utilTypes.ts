@@ -1,7 +1,8 @@
-import { CardTypeCreationDTO, CardTypeDTO } from "../../types/cardTypeDTO";
+import { CardTypeCreationDTO, CardTypeDTO, CardTypeUpdateDTO } from "../../types/cardTypeDTO";
 
 export interface EditTypeSubmission {
-    typeData: Partial<CardTypeDTO>;
+    editingType: CardTypeDTO;
+    typeData: CardTypeUpdateDTO;
     imageFile?: File;
 }
 

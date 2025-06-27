@@ -13,3 +13,5 @@ export interface CardTypeCreationDTO {
     textColor: string;
     name: string;
 }
+
+export type CardTypeUpdateDTO = Partial<CardTypeCreationDTO>;

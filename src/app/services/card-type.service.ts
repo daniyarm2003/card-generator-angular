@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { CardTypeCreationDTO, CardTypeDTO } from '../types/cardTypeDTO';
+import { CardTypeCreationDTO, CardTypeDTO, CardTypeUpdateDTO } from '../types/cardTypeDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,10 @@ export class CardTypeService {
 
   public createCardType(dto: CardTypeCreationDTO) {
     return this.httpClient.post<CardTypeDTO>(this.baseUrl, dto);
+  }
+
+  public updateCardType(typeId: string, dto: CardTypeUpdateDTO) {
+    return this.httpClient.patch<CardTypeDTO>(`${this.baseUrl}/${typeId}`, dto);
   }
 
   public updateCardTypeImage(typeId: string, imageFile: File) {
