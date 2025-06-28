@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { CardTypeCreationDTO, CardTypeDTO } from '../../../types/cardTypeDTO';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { CardTypeDTO } from '../../../types/cardTypeDTO';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TrackedFileService } from '../../../services/tracked-file.service';
 import { TypeEditPreviewComponent } from '../type-edit-preview/type-edit-preview.component';
@@ -12,7 +12,7 @@ import { AddTypeSubmission, EditTypeSubmission } from '../utilTypes';
   templateUrl: './type-edit-modal.component.html',
   styleUrl: './type-edit-modal.component.scss'
 })
-export class TypeEditModalComponent implements OnInit, OnChanges, OnDestroy {
+export class TypeEditModalComponent implements OnChanges, OnDestroy {
   @Input({
     required: true
   })
@@ -30,6 +30,9 @@ export class TypeEditModalComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
   public onEditType: EventEmitter<EditTypeSubmission> = new EventEmitter();
 
+  @ViewChild('typeImageSelector')
+  public typeImageSelector!: ElementRef<HTMLInputElement>;
+
   public nameFormControl: FormControl = new FormControl('');
 
   public bgCol1FormControl: FormControl = new FormControl('');
@@ -40,10 +43,6 @@ export class TypeEditModalComponent implements OnInit, OnChanges, OnDestroy {
   public selectedImageFileBlobUrl?: string;
 
   public constructor(private trackedFileService: TrackedFileService) {}
-
-  ngOnInit() {
-    
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes['show'] && !changes['show'].isFirstChange()) {
@@ -64,6 +63,8 @@ export class TypeEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
       this.selectedImageFile = undefined;
       this.clearSelectedImageBlobUrl();
+
+      this.typeImageSelector.nativeElement.value = '';
     }
   }
 

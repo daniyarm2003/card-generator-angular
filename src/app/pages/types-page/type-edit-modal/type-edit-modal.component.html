@@ -31,7 +31,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="typeImageInput">Image</label>
-                        <input id="typeImageInput" class="form-control" type="file" (change)="handleImageFileChange($event)" accept="image/*" />
+                        <input #typeImageSelector id="typeImageInput" class="form-control" type="file" (change)="handleImageFileChange($event)" accept="image/*" />
                     </div>
                     <button type="submit" class="btn btn-secondary">Submit</button>
                 </form>
