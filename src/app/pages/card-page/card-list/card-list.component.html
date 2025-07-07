@@ -1,0 +1,8 @@
+<div>
+    <div class="card-list" *ngIf="!this.cardsLoading(); else displayCardsLoading">
+        <app-card-display *ngFor="let card of this.cards()" [card]="card" />
+    </div>
+    <ng-template #displayCardsLoading>
+        <app-page-loading-icon />
+    </ng-template>
+</div>

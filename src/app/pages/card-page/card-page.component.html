@@ -1,5 +1,12 @@
 <div>
     <app-default-layout title="Cards">
-        Hello!
+        <div *ngIf="cards; else loadingIcon">
+            <app-card-list [cards]="cards.data" [cardsLoading]="cardsLoading" />
+            <app-pagination-display [dataLoading]="cardsLoading" [paginationData]="cards" (onSetPageNum)="onPaginationPropsChange($event, cardPageSize)" />
+            <button class="btn btn-primary create-card-button">Create Card</button>
+        </div>
+        <ng-template #loadingIcon>
+            <app-page-loading-icon />
+        </ng-template>
     </app-default-layout>
 </div>

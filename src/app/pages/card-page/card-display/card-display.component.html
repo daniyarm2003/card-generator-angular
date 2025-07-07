@@ -1,0 +1,10 @@
+<div class="card playing-card" [ngStyle]="getCardStyle()">
+    <div class="card-body">
+        <img [src]="getCardImageUrl()" width="100" />
+        <h5 class="card-title">{{card().name}}</h5>
+        <i class="card-body">"{{card().quote}}"</i>
+    </div>
+    <div class="card-footer">
+        <button class="btn w-100 playing-card-button" [ngStyle]="getButtonStyle()">Edit</button>
+    </div>
+</div>

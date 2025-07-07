@@ -8,9 +8,7 @@
             <app-type-edit-modal [show]="showEditModal" [cardType]="curEditingCardType" (onClose)="handleModalClose()" (onAddType)="onAddType($event)" (onEditType)="onEditType($event)" />
         </div>
         <ng-template #typesLoading>
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+            <app-page-loading-icon />
         </ng-template>
     </app-default-layout>
 </div>

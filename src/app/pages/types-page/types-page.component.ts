@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CardTypeService } from '../../services/card-type.service';
-import { CardTypeCreationDTO, CardTypeDTO } from '../../types/cardTypeDTO';
+import { CardTypeDTO } from '../../types/cardTypeDTO';
 import { CommonModule } from '@angular/common';
 import { TypeDisplayComponent } from './type-display/type-display.component';
 import { DefaultLayoutComponent } from '../../layouts/default-layout/default-layout.component';
 import { TypeEditModalComponent } from './type-edit-modal/type-edit-modal.component';
 import { AddTypeSubmission, EditTypeSubmission } from './utilTypes';
-import { catchError, concat, concatMap, EMPTY, finalize, iif, mergeMap, of, throwError } from 'rxjs';
+import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
+import { PageLoadingIconComponent } from '../../components/page-loading-icon/page-loading-icon.component';
 
 @Component({
   selector: 'app-types-page',
-  imports: [CommonModule, TypeDisplayComponent, DefaultLayoutComponent, TypeEditModalComponent],
+  imports: [CommonModule, TypeDisplayComponent, DefaultLayoutComponent, TypeEditModalComponent, PageLoadingIconComponent],
   templateUrl: './types-page.component.html',
   styleUrl: './types-page.component.scss'
 })

@@ -1,0 +1,13 @@
+.playing-card {
+    border: 1px solid black;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25);
+    margin: 2px;
+}
+
+.card-image {
+    object-fit: fill;
+}
+
+.playing-card-button:hover {
+    box-shadow: 1px 1px 2px inset rgba(0, 0, 0, 0.25);
+}
