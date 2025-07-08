@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CardDTO } from '../../../types/cardDTO';
 import { TrackedFileService } from '../../../services/tracked-file.service';
 
@@ -11,6 +11,8 @@ import { TrackedFileService } from '../../../services/tracked-file.service';
 })
 export class CardDisplayComponent {
   public card = input.required<CardDTO>();
+
+  public onEdit = output<CardDTO>();
 
   public constructor(private trackedFileService: TrackedFileService) {}
 
@@ -26,6 +28,10 @@ export class CardDisplayComponent {
       'background': `radial-gradient(#${backgroundColorHexCode1}, #${backgroundColorHexCode2})`,
       'color': `#${textColor}`
     };
+  }
+
+  public handleEditClick() {
+    this.onEdit.emit(this.card());
   }
 
   public getButtonStyle() {

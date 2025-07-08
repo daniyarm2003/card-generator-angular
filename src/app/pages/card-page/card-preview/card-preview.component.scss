@@ -1,0 +1,83 @@
+.card-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    aspect-ratio: 1 / 1.4;
+}
+
+.card-preview-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-preview-bar-item {
+    display: flex;
+    flex: 1;
+}
+
+.card-type-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Aldrich', sans-serif;
+}
+
+.card-level-preview {
+    font-family: 'Changa', sans-serif;
+    font-size: 1.5em;
+}
+
+.card-name-preview {
+    font-family: 'Kalam', sans-serif;
+    font-size: 1.8em;
+    word-wrap: break-word;
+}
+
+.card-type-image-preview {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.card-preview-image-container {
+    width: 100%;
+    aspect-ratio: 2.0;
+}
+
+.card-preview-image {
+    width: 100%;
+    aspect-ratio: 0.5;
+    object-fit: fill;
+}
+
+.card-preview-quote-container {
+    margin-top: 1px;
+    word-break: break-word;
+}
+
+.card-preview-quote {
+    font-family: 'Courgette';
+}
+
+.card-preview-effect-container {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    white-space: pre-line;
+}
+
+.card-stat-preview {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 0.8em;
+}
+
+.card-number-preview {
+    font-family: 'Press Start 2P', sans-serif;
+}

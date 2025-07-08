@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CardDTO } from '../../../types/cardDTO';
 import { CardDisplayComponent } from '../card-display/card-display.component';
 import { PageLoadingIconComponent } from "../../../components/page-loading-icon/page-loading-icon.component";
@@ -13,4 +13,10 @@ import { PageLoadingIconComponent } from "../../../components/page-loading-icon/
 export class CardListComponent {
   public cardsLoading = input.required<boolean>();
   public cards = input.required<CardDTO[]>();
+
+  public onEditCard = output<CardDTO>();
+
+  public handleEditCard(card: CardDTO) {
+    this.onEditCard.emit(card);
+  }
 }

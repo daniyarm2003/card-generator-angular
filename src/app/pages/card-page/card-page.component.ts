@@ -7,25 +7,47 @@ import { CardDTO } from '../../types/cardDTO';
 import { PaginationDTO } from '../../types/paginationDTO';
 import { PaginationDisplayComponent } from "../../components/pagination-display/pagination-display.component";
 import { CardListComponent } from "./card-list/card-list.component";
+import { CardEditModalComponent } from './card-edit-modal/card-edit-modal.component';
+import { CardTypeService } from '../../services/card-type.service';
+import { CardTypeDTO } from '../../types/cardTypeDTO';
 
 @Component({
   selector: 'app-card-page',
-  imports: [DefaultLayoutComponent, PageLoadingIconComponent, PageLoadingIconComponent, CommonModule, PaginationDisplayComponent, PaginationDisplayComponent, CardListComponent],
+  imports: [DefaultLayoutComponent, PageLoadingIconComponent, PageLoadingIconComponent, CommonModule, PaginationDisplayComponent, 
+    PaginationDisplayComponent, CardListComponent, CardEditModalComponent],
   templateUrl: './card-page.component.html',
   styleUrl: './card-page.component.scss'
 })
 export class CardPageComponent implements OnInit {
   public cardsLoading = true;
+  public cardTypesLoading = true;
 
   public cards?: PaginationDTO<CardDTO>;
+  public cardTypes: CardTypeDTO[] = [];
 
   public cardPageNum = 1;
   public cardPageSize = 50;
 
-  constructor(private cardService: CardService) { }
+  public showCardModal = false;
+  public cardToEdit?: CardDTO;
+
+  constructor(private cardService: CardService, private cardTypeService: CardTypeService) { }
 
   ngOnInit() {
     this.refreshCards();
+
+    this.cardTypesLoading = true;
+    this.cardTypeService.getAllCardTypes().subscribe({
+      next: (data) => {
+        this.cardTypes = data;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        this.cardTypesLoading = false;
+      }
+    });
   }
 
   private refreshCards() {
@@ -42,6 +64,16 @@ export class CardPageComponent implements OnInit {
         this.cardsLoading = false;
       }
     });
+  }
+
+  public openCardModal(card?: CardDTO) {
+    this.showCardModal = true;
+    this.cardToEdit = card;
+  }
+
+  public closeCardModal() {
+    this.showCardModal = false;
+    this.cardToEdit = undefined;
   }
 
   public onPaginationPropsChange(pageNum: number, pageSize: number) {

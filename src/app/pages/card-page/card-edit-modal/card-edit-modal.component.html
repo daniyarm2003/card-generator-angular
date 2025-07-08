@@ -1,9 +1,59 @@
-<div [classList]="`modal default-modal fade ${true ? 'd-block show' : ''}`" tabindex="-1">
+<div [classList]="`modal default-modal fade ${show() ? 'd-block show' : ''}`" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2></h2>
-                <button type="button" class="btn-close"></button>
+                <h2>{{card() ? `Editing ${card()!.name}` : 'Create New Card'}}</h2>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <app-card-preview [previewProps]="getCardPreviewProps()" />
+                <form [formGroup]="cardForm" (submit)="onSubmit($event)">
+                    <div class="mb-3">
+                        <label for="card-type" class="form-label">Type</label>
+                        <select id="card-type" class="form-select" formControlName="typeId">
+                            <option [value]="getNoneCardType().id" [defaultSelected]>{{getNoneCardType().name}}</option>
+                            <option *ngFor="let type of getNonEmptyCardTypes()" [value]="type.id">{{type.name}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-variant" class="form-label">Variant</label>
+                        <select id="card-variant" class="form-select" formControlName="variant">
+                            <option value="REGULAR">Regular Card</option>
+                            <option value="NEBULA">Nebula Card</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-name" class="form-label">Name</label>
+                        <input type="text" id="card-name" class="form-control" formControlName="name" maxlength="64" />
+                    </div>
+                    <div *ngIf="cardForm.get('variant')?.value === 'REGULAR'">
+                        <div class="mb-3">
+                            <label for="card-level" class="form-label">Level</label>
+                            <input type="number" id="card-level" class="form-control" formControlName="level" min="1" max="10" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="card-attack" class="form-label">Attack</label>
+                            <input type="number" id="card-attack" class="form-control" formControlName="attack" min="0" max="9999" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="card-health" class="form-label">Health</label>
+                            <input type="number" id="card-health" class="form-control" formControlName="health" min="0" max="9999" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-quote" class="form-label">Quote</label>
+                        <input type="text" id="card-quote" class="form-control" formControlName="quote" maxlength="64" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-effect" class="form-label">Effect</label>
+                        <textarea id="card-effect" class="form-control" formControlName="effect"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-image" class="form-label">Image</label>
+                        <input #cardImageSelector id="card-image" class="form-control" type="file" accept="image/*" (change)="onCardImageChange($event)" />
+                    </div>
+                    <button type="submit" class="btn btn-secondary mt-3 w-100" [disabled]="!cardForm.valid">Submit</button>
+                </form>
             </div>
         </div>
     </div>

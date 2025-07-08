@@ -3,7 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Outpu
 import { CardTypeDTO } from '../../../types/cardTypeDTO';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TrackedFileService } from '../../../services/tracked-file.service';
-import { TypeEditPreviewComponent } from '../type-edit-preview/type-edit-preview.component';
+import { TypeEditPreviewComponent } from '../../../components/type-edit-preview/type-edit-preview.component';
 import { AddTypeSubmission, EditTypeSubmission } from '../utilTypes';
 
 @Component({
@@ -100,7 +100,7 @@ export class TypeEditModalComponent implements OnChanges, OnDestroy {
       return this.trackedFileService.getFileDownloadUrl(this.cardType.imageFileId);
     }
 
-    return 'https://placehold.co/400';
+    return './assets/none-type.png';
   }
 
   public async handleImageFileChange(e: Event) {

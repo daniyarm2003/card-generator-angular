@@ -1,6 +1,6 @@
 <div>
     <div class="card-list" *ngIf="!this.cardsLoading(); else displayCardsLoading">
-        <app-card-display *ngFor="let card of this.cards()" [card]="card" />
+        <app-card-display *ngFor="let card of this.cards()" [card]="card" (onEdit)="handleEditCard($event)" />
     </div>
     <ng-template #displayCardsLoading>
         <app-page-loading-icon />

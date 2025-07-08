@@ -33,7 +33,7 @@ export class TypeDisplayComponent {
       return this.trackedFileService.getFileDownloadUrl(this.type.imageFileId);
     }
 
-    return 'https://placehold.co/400';
+    return './assets/none-type.png';
   }
 
   public handleEditButtonClick() {

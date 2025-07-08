@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardTypeService } from '../../services/card-type.service';
-import { CardTypeDTO } from '../../types/cardTypeDTO';
+import { CARD_TYPE_NONE_ID, CardTypeDTO } from '../../types/cardTypeDTO';
 import { CommonModule } from '@angular/common';
 import { TypeDisplayComponent } from './type-display/type-display.component';
 import { DefaultLayoutComponent } from '../../layouts/default-layout/default-layout.component';
@@ -39,6 +39,10 @@ export class TypesPageComponent implements OnInit {
         this.cardTypesLoading = false;
       }
     });
+  }
+
+  public getNonEmptyCardTypes() {
+    return this.cardTypes.filter(type => type.id !== CARD_TYPE_NONE_ID);
   }
 
   public handleCreateTypeClick() {

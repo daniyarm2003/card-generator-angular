@@ -2,7 +2,7 @@
     <app-default-layout title="Types">
         <div *ngIf="!cardTypesLoading; else typesLoading">
             <div class="container-fluid d-flex flex-row gap-2 mb-3 flex-wrap justify-content-center">
-                <app-type-display *ngFor="let cardType of cardTypes" [type]="cardType" (editClick)="handleTypeEditClick(cardType)" />
+                <app-type-display *ngFor="let cardType of getNonEmptyCardTypes()" [type]="cardType" (editClick)="handleTypeEditClick(cardType)" />
             </div>
             <button class="btn btn-primary" (click)="handleCreateTypeClick()">Add Type</button>
             <app-type-edit-modal [show]="showEditModal" [cardType]="curEditingCardType" (onClose)="handleModalClose()" (onAddType)="onAddType($event)" (onEditType)="onEditType($event)" />
