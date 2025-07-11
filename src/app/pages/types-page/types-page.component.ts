@@ -23,6 +23,8 @@ export class TypesPageComponent implements OnInit {
   public curEditingCardType?: CardTypeDTO = undefined;
   public showEditModal: boolean = false;
 
+  public lastImageUpdateTime = new Date();
+
   public constructor(private cardTypeService: CardTypeService) { }
 
   ngOnInit() {
@@ -102,6 +104,7 @@ export class TypesPageComponent implements OnInit {
           return of(updatedType);
         }
 
+        this.lastImageUpdateTime = new Date();
         return this.cardTypeService.updateCardTypeImage(updatedType.id, imageFile);
       }),
       catchError((err, caught) => {

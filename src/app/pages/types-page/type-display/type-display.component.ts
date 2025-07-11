@@ -15,6 +15,11 @@ export class TypeDisplayComponent {
   })
   public type!: CardTypeDTO;
 
+  @Input({
+    required: true
+  })
+  public lastImageUpdateTime!: Date;
+
   @Output()
   public editClick: EventEmitter<any> = new EventEmitter();
 
@@ -30,7 +35,7 @@ export class TypeDisplayComponent {
 
   public getImageUrl() {
     if(this.type.imageFileId) {
-      return this.trackedFileService.getFileDownloadUrl(this.type.imageFileId);
+      return this.trackedFileService.getFileDownloadUrl(this.type.imageFileId) + `?t=${this.lastImageUpdateTime.getTime()}`;
     }
 
     return './assets/none-type.png';
