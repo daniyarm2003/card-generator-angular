@@ -39,4 +39,8 @@ export class CardService {
 
     return this.httpClient.put<CardDTO>(`${this.baseUrl}/${id}/image`, formData);
   }
+
+  public generateCardImage(id: string) {
+    return this.httpClient.patch<CardDTO>(`${this.baseUrl}/${id}/card-image/update`, {});
+  }
 }

@@ -28,7 +28,7 @@ export class CardPageComponent implements OnInit {
   public cardTypes: CardTypeDTO[] = [];
 
   public cardPageNum = 1;
-  public cardPageSize = 50;
+  public cardPageSize = 30;
 
   public showCardModal = false;
   public cardToEdit?: CardDTO;
@@ -110,6 +110,15 @@ export class CardPageComponent implements OnInit {
 
         return caught;
       }),
+      concatMap(card => {
+        return this.cardService.generateCardImage(card.id);
+      }),
+      catchError((err, caught) => {
+        window.alert('An error occurred while generating the card image');
+        console.error(err);
+
+        return caught;
+      }),
       finalize(() => {
         this.cardModalSubmitLoading = false;
         this.showCardModal = false;
@@ -141,6 +150,15 @@ export class CardPageComponent implements OnInit {
       }),
       catchError((err, caught) => {
         window.alert('An error occurred while updating the card image');
+        console.error(err);
+
+        return caught;
+      }),
+      concatMap(card => {
+        return this.cardService.generateCardImage(card.id);
+      }),
+      catchError((err, caught) => {
+        window.alert('An error occurred while generating the card image');
         console.error(err);
 
         return caught;

@@ -22,13 +22,13 @@
     </div>
     <div class="card-preview-bar">
         <div class="card-preview-bar-item">
-            <span *ngIf="previewProps().variant === 'REGULAR'" class="card-stat-preview">Attack: {{previewProps().attack}}</span>
+            <span *ngIf="previewProps().variant === 'REGULAR'" class="card-stat-preview">HP {{previewProps().health}}</span>
         </div>
         <div class="d-flex justify-content-center">
             <span class="card-number-preview">{{previewProps().number}}</span>
         </div>
         <div class="card-preview-bar-item justify-content-end">
-            <span *ngIf="previewProps().variant === 'REGULAR'" class="card-stat-preview">Health: {{previewProps().health}}</span>
+            <span *ngIf="previewProps().variant === 'REGULAR'" class="card-stat-preview">ATK {{previewProps().attack}}</span>
         </div>
     </div>
 </div>
