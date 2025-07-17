@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, input, OnChanges, OnDestroy, OnInit, output, SimpleChanges, ViewChild } from '@angular/core';
-import { CardDTO, CardVariant } from '../../../types/cardDTO';
+import { CardCreationDTO, CardDTO, CardUpdateDTO, CardVariant } from '../../../types/cardDTO';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CARD_TYPE_NONE_ID, CardTypeDTO } from '../../../types/cardTypeDTO';
 import { TrackedFileService } from '../../../services/tracked-file.service';
 import { Subscription } from 'rxjs';
 import { CardPreviewComponent } from "../card-preview/card-preview.component";
-import { CardPreviewProps } from '../utils';
+import { AddCardSubmission, CardPreviewProps, CardUpdateSubmission } from '../utils';
 
 @Component({
   selector: 'app-card-edit-modal',
@@ -20,7 +20,12 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
   public cardTypes = input.required<CardTypeDTO[]>();
 
+  public submitLoading = input.required<boolean>();
+
   public onClose = output<void>();
+
+  public onAddSubmit = output<AddCardSubmission>();
+  public onEditSubmit = output<CardUpdateSubmission>();
 
   @ViewChild('cardImageSelector')
   public cardImageInput!: ElementRef<HTMLInputElement>;
@@ -32,6 +37,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
   public cardForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(64)]),
+    number: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(9999)]),
     variant: new FormControl<CardVariant>('REGULAR', Validators.required),
     quote: new FormControl(''),
     effect: new FormControl(''),
@@ -66,6 +72,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
       this.cardForm.reset({
         name: card?.name ?? '',
+        number: card?.number ?? 1,
         variant: card?.variant ?? 'REGULAR',
         quote: card?.quote ?? '',
         effect: card?.effect ?? '',
@@ -172,12 +179,33 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    
+    const formData = this.cardForm.value;
+    const card = this.card();
+
+    if(card) {
+      this.onEditSubmit.emit({
+        cardToUpdate: card,
+        dto: formData as CardUpdateDTO,
+        imageFile: this.selectedCardImageFile
+      });
+    }
+    else {
+      this.onAddSubmit.emit({
+        dto: formData as CardCreationDTO,
+        imageFile: this.selectedCardImageFile
+      });
+    }
   }
 
   public getSelectedImageUrl() {
     if(this.selectedCardImageFileBlobUrl) {
       return this.selectedCardImageFileBlobUrl;
+    }
+
+    const card = this.card();
+
+    if(card?.displayImageId) {
+      return this.trackedFileService.getFileDownloadUrl(card.displayImageId);
     }
 
     return 'https://placehold.co/400';
@@ -186,6 +214,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
   public getCardPreviewProps(): CardPreviewProps {
     return {
       name: this.cardForm.get('name')?.value ?? '',
+      number: this.cardForm.get('number')?.value ?? 1,
       variant: this.cardForm.get('variant')?.value ?? 'REGULAR',
       quote: this.cardForm.get('quote')?.value ?? undefined,
       effect: this.cardForm.get('effect')?.value ?? undefined,

@@ -1,7 +1,7 @@
 <div class="pagination-display">
-    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === 1 || dataLoading" (click)="setPageNum(-1, false)">&larr;</button>
+    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === 1 || dataLoading()" (click)="setPageNum(-1, false)">&larr;</button>
     <div class="pagination-display-inner">
         Page {{paginationData().pageNumber}}/{{getLastPage()}}
     </div>
-    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === getLastPage() || dataLoading" (click)="setPageNum(1, false)">&rarr;</button>
+    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === getLastPage() || dataLoading()" (click)="setPageNum(1, false)">&rarr;</button>
 </div>

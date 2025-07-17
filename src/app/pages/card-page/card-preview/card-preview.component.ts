@@ -36,8 +36,7 @@ export class CardPreviewComponent {
   public getImageStyle() {
     return {
       'background-image': `url(${this.previewProps().imageUrl})`,
-      'background-size': '100%',
-      'background-position': 'center',
+      'background-size': '100% 100%',
       'border': `1px solid ${this.getTextColor()}`,
       'border-radius': '5px',
       'background-repeat': 'no-repeat'

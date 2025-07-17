@@ -4,7 +4,15 @@
             <app-card-list [cards]="cards.data" [cardsLoading]="cardsLoading" (onEditCard)="openCardModal($event)" />
             <app-pagination-display [dataLoading]="cardsLoading" [paginationData]="cards" (onSetPageNum)="onPaginationPropsChange($event, cardPageSize)" />
             <button class="btn btn-primary create-card-button" (click)="openCardModal()">Create Card</button>
-            <app-card-edit-modal [show]="showCardModal" [card]="cardToEdit" [cardTypes]="cardTypes" (onClose)="closeCardModal()" />
+            <app-card-edit-modal 
+                [show]="showCardModal" 
+                [card]="cardToEdit" 
+                [cardTypes]="cardTypes" 
+                [submitLoading]="cardModalSubmitLoading" 
+                (onClose)="closeCardModal()"
+                (onAddSubmit)="onAddCardSubmit($event)"
+                (onEditSubmit)="onEditCardSubmit($event)"
+                />
         </div>
         <ng-template #loadingIcon>
             <app-page-loading-icon />

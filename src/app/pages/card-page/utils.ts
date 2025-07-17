@@ -1,4 +1,4 @@
-import { CardCreationDTO, CardDTO, CardVariant } from "../../types/cardDTO";
+import { CardCreationDTO, CardDTO, CardUpdateDTO, CardVariant } from "../../types/cardDTO";
 import { CardTypeDTO } from "../../types/cardTypeDTO";
 
 export interface AddCardSubmission {
@@ -8,11 +8,13 @@ export interface AddCardSubmission {
 
 export interface CardUpdateSubmission {
     cardToUpdate: CardDTO;
+    dto: CardUpdateDTO;
     imageFile?: File;
 }
 
 export interface CardPreviewProps {
     name: string;
+    number: number;
     variant: CardVariant;
     quote?: string;
     effect?: string;

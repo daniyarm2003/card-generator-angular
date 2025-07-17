@@ -10,6 +10,8 @@ import { CardListComponent } from "./card-list/card-list.component";
 import { CardEditModalComponent } from './card-edit-modal/card-edit-modal.component';
 import { CardTypeService } from '../../services/card-type.service';
 import { CardTypeDTO } from '../../types/cardTypeDTO';
+import { AddCardSubmission, CardUpdateSubmission } from './utils';
+import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-card-page',
@@ -30,6 +32,8 @@ export class CardPageComponent implements OnInit {
 
   public showCardModal = false;
   public cardToEdit?: CardDTO;
+
+  public cardModalSubmitLoading = false;
 
   constructor(private cardService: CardService, private cardTypeService: CardTypeService) { }
 
@@ -83,5 +87,80 @@ export class CardPageComponent implements OnInit {
     this.cardPageSize = pageSize;
 
     this.refreshCards();
+  }
+
+  public onAddCardSubmit(submission: AddCardSubmission) {
+    this.cardModalSubmitLoading = true;
+    
+    this.cardService.createCard(submission.dto).pipe(
+      catchError(err => {
+        window.alert('An error occurred while creating the card');
+        return throwError(() => err);
+      }),
+      concatMap(card => {
+        if(!submission.imageFile) {
+          return of(card);
+        }
+
+        return this.cardService.updateCardImage(card.id, submission.imageFile);
+      }),
+      catchError((err, caught) => {
+        window.alert('An error occurred while updating the card image');
+        console.error(err);
+
+        return caught;
+      }),
+      finalize(() => {
+        this.cardModalSubmitLoading = false;
+        this.showCardModal = false;
+      })
+    ).subscribe({
+      next: () => {
+        this.refreshCards();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  public onEditCardSubmit(submission: CardUpdateSubmission) {
+    this.cardModalSubmitLoading = true;
+    
+    this.cardService.updateCard(submission.cardToUpdate.id, submission.dto).pipe(
+      catchError(err => {
+        window.alert('An error occurred while updating the card');
+        return throwError(() => err);
+      }),
+      concatMap(card => {
+        if(!submission.imageFile) {
+          return of(card);
+        }
+
+        return this.cardService.updateCardImage(card.id, submission.imageFile);
+      }),
+      catchError((err, caught) => {
+        window.alert('An error occurred while updating the card image');
+        console.error(err);
+
+        return caught;
+      }),
+      finalize(() => {
+        this.cardModalSubmitLoading = false;
+        this.showCardModal = false;
+      })
+    ).subscribe({
+      next: (updatedCard) => {
+        if(!this.cards) {
+          console.error('Cards data is not loaded');
+          return;
+        }
+
+        this.cards.data = this.cards.data.map(card => card.id === updatedCard.id ? updatedCard : card);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }

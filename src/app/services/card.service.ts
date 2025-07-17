@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { CardCreationDTO, CardDTO } from '../types/cardDTO';
+import { CardCreationDTO, CardDTO, CardUpdateDTO } from '../types/cardDTO';
 import { PaginationDTO } from '../types/paginationDTO';
 
 @Injectable({
@@ -27,5 +27,16 @@ export class CardService {
 
   public createCard(dto: CardCreationDTO) {
     return this.httpClient.post<CardDTO>(this.baseUrl, dto);
+  }
+
+  public updateCard(id: string, dto: CardUpdateDTO) {
+    return this.httpClient.patch<CardDTO>(`${this.baseUrl}/${id}`, dto);
+  }
+
+  public updateCardImage(id: string, file: File) {
+    const formData = new FormData();
+    formData.append('imageFile', file);
+
+    return this.httpClient.put<CardDTO>(`${this.baseUrl}/${id}/image`, formData);
   }
 }
