@@ -8,7 +8,7 @@ import { PaginationDTO } from '../types/paginationDTO';
   providedIn: 'root'
 })
 export class CardService {
-  private readonly baseUrl = `${environment.backendBaseUrl}/api/cards`;
+  private readonly baseUrl = `${environment.backendBaseUrl}/cards`;
 
   constructor(private httpClient: HttpClient) { }
 

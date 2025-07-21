@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class TrackedFileService {
-  private readonly baseUrl = `${environment.backendBaseUrl}/api/files`;
+  private readonly baseUrl = `${environment.backendBaseUrl}/files`;
 
   constructor() { }
 
