@@ -105,13 +105,13 @@ export class TypesPageComponent implements OnInit {
         }
 
         this.lastImageUpdateTime = new Date();
-        return this.cardTypeService.updateCardTypeImage(updatedType.id, imageFile);
-      }),
-      catchError((err, caught) => {
-        window.alert('An error has occurred while trying to update the image for the type');
-        console.error(err);
+        return this.cardTypeService.updateCardTypeImage(updatedType.id, imageFile)
+          .pipe(catchError(err => {
+            window.alert('An error has occurred while trying to update the image for the type');
+            console.error(err);
 
-        return caught;
+            return of(updatedType);
+          }));
       }),
       finalize(() => this.showEditModal = false)
     ).subscribe({
