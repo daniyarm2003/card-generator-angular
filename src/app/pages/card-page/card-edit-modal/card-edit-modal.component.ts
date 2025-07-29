@@ -111,7 +111,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
   private applyVariantSpecificValidators(variant: CardVariant) {
     const validatorMap: Record<string, ValidatorFn[]> = {
-      'quote': [Validators.required, Validators.maxLength(64)],
+      'quote': [Validators.required, Validators.maxLength(200)],
       'level': [Validators.required, Validators.min(1), Validators.max(10)],
       'attack': [Validators.required, Validators.min(0), Validators.max(9999)],
       'health': [Validators.required, Validators.min(0), Validators.max(9999)],
