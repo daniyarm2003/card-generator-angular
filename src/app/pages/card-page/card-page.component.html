@@ -1,8 +1,13 @@
 <div>
     <app-default-layout title="Cards">
         <div *ngIf="!cardsLoading && !cardTypesLoading && cards; else loadingIcon">
-            <app-card-list [cards]="cards.data" [cardsLoading]="cardsLoading" (onEditCard)="openCardModal($event)" />
-            <app-pagination-display [dataLoading]="cardsLoading" [paginationData]="cards" (onSetPageNum)="onPaginationPropsChange($event, cardPageSize)" />
+            <app-card-list [cards]="cards.data" [cardsLoading]="cardsLoading" [lastCardUpdateTime]="lastCardUpdateTime" (onEditCard)="openCardModal($event)" />
+            <app-pagination-display 
+                [dataLoading]="cardsLoading" 
+                [paginationData]="cards" 
+                (onSetPageNum)="onPaginationPropsChange($event, cardPageSize)"
+                (onSetPageSize)="onPaginationPropsChange(1, $event)"
+                />
             <button class="btn btn-primary create-card-button" (click)="openCardModal()">Create Card</button>
             <app-card-edit-modal 
                 [show]="showCardModal" 

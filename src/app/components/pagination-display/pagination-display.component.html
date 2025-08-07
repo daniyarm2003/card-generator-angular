@@ -1,7 +1,17 @@
 <div class="pagination-display">
-    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === 1 || dataLoading()" (click)="setPageNum(-1, false)">&larr;</button>
-    <div class="pagination-display-inner">
-        Page {{paginationData().pageNumber}}/{{getLastPage()}}
+    <div class="pagination-display-main">
+        <button class="btn btn-primary" [disabled]="getCurrentPageNum() <= 1 || dataLoading()" (click)="setPageNum(1, true)">&lt;&lt;</button>
+        <button class="btn btn-primary" [disabled]="getCurrentPageNum() <= 1 || dataLoading()" (click)="setPageNum(-1, false)">&lt;</button>
+        <div class="pagination-display-inner">
+            Page {{getCurrentPageNum()}}/{{getLastPage()}}
+        </div>
+        <button class="btn btn-primary" [disabled]="getCurrentPageNum() >= getLastPage() || dataLoading()" (click)="setPageNum(1, false)">&gt;</button>
+        <button class="btn btn-primary" [disabled]="getCurrentPageNum() >= getLastPage() || dataLoading()" (click)="setPageNum(getLastPage(), true)">&gt;&gt;</button>
     </div>
-    <button class="btn btn-primary" [disabled]="paginationData().pageNumber === getLastPage() || dataLoading()" (click)="setPageNum(1, false)">&rarr;</button>
+    <div class="pagination-display-page-size">
+        <label for="page-size-select">Page Size:</label>
+        <select id="page-size-select" class="form-select" (change)="handlePageSizeChange($event)" [disabled]="dataLoading()">
+            <option *ngFor="let size of pageSizeOptions" [selected]="size === paginationData().pageSize" [value]="size">{{size}}</option>
+        </select>
+    </div>
 </div>

@@ -12,13 +12,15 @@ import { TrackedFileService } from '../../../services/tracked-file.service';
 export class CardDisplayComponent {
   public card = input.required<CardDTO>();
 
+  public lastCardUpdateTime = input.required<Date>();
+
   public onEdit = output<CardDTO>();
 
   public constructor(private trackedFileService: TrackedFileService) {}
 
   public getCardImageUrl() {
     const { cardImageId } = this.card();
-    return cardImageId ? this.trackedFileService.getFileDownloadUrl(cardImageId) : 'https://placehold.co/400';
+    return cardImageId ? this.trackedFileService.getFileDownloadUrl(cardImageId) + `?t=${this.lastCardUpdateTime().getTime()}` : 'https://placehold.co/400';
   }
 
   public getCardStyle() {
