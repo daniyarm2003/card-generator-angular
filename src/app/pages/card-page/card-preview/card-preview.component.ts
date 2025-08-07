@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { CardPreviewProps } from '../utils';
+import { CardPreviewProps, NEBULA_BACKGROUND_COLOR_INNER, NEBULA_BACKGROUND_COLOR_OUTER, NEBULA_TEXT_COLOR } from '../utils';
 import { TrackedFileService } from '../../../services/tracked-file.service';
 import { CommonModule } from '@angular/common';
 import { CARD_TYPE_NONE_ID } from '../../../types/cardTypeDTO';
@@ -26,6 +26,13 @@ export class CardPreviewComponent {
 
   public getStyle() {
     const { backgroundColorHexCode1, backgroundColorHexCode2 } = this.previewProps().type;
+
+    if (this.previewProps().variant === 'NEBULA') {
+      return {
+        'color': NEBULA_TEXT_COLOR,
+        'background': `radial-gradient(${NEBULA_BACKGROUND_COLOR_INNER}, ${NEBULA_BACKGROUND_COLOR_OUTER})`
+      };
+    }
 
     return {
       'color': this.getTextColor(),

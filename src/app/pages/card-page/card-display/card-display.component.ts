@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { CardDTO } from '../../../types/cardDTO';
 import { TrackedFileService } from '../../../services/tracked-file.service';
+import { NEBULA_BACKGROUND_COLOR_INNER, NEBULA_BACKGROUND_COLOR_OUTER, NEBULA_TEXT_COLOR } from '../utils';
 
 @Component({
   selector: 'app-card-display',
@@ -25,6 +26,13 @@ export class CardDisplayComponent {
 
   public getCardStyle() {
     const { backgroundColorHexCode1, backgroundColorHexCode2, textColor } = this.card().type;
+
+    if (this.card().variant === 'NEBULA') {
+      return {
+        'background': `radial-gradient(${NEBULA_BACKGROUND_COLOR_INNER}, ${NEBULA_BACKGROUND_COLOR_OUTER})`,
+        'color': NEBULA_TEXT_COLOR
+      };
+    }
 
     return {
       'background': `radial-gradient(#${backgroundColorHexCode1}, #${backgroundColorHexCode2})`,
