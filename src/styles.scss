@@ -1,16 +1,5 @@
 @use '../node_modules/bootstrap/scss/bootstrap.scss' as bootstrap;
-
-$paynes-gray: #555b6eff;
-$cambridge-blue: #89b0aeff;
-$mint-green: #bee3dbff;
-$seasalt: #faf9f9ff;
-$apricot: #ffd6baff;
-
-$primary: $cambridge-blue;
-$secondary: $mint-green;
-
-$primary-text-color: $seasalt;
-$secondary-text-color: $seasalt;
+@use './styles/variables.scss' as *;
 
 body {
     background-color: $seasalt;
@@ -51,16 +40,4 @@ body {
             }
         }
     }
-}
-
-.main-navbar {
-    background-color: $primary;
-}
-
-.main-navbar-link {
-    color: $primary-text-color;
-}
-
-.main-navbar-link:hover {
-    color: darken($primary-text-color, 10%);
 }

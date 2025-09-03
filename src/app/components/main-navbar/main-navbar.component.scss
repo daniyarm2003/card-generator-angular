@@ -1,0 +1,13 @@
+@use '../../../styles/variables.scss' as *;
+
+.main-navbar {
+    background-color: $primary;
+}
+
+.main-navbar-link {
+    color: $primary-text-color;
+}
+
+.main-navbar-link:hover {
+    color: darken($primary-text-color, 10%);
+}
