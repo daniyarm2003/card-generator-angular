@@ -1,6 +1,33 @@
-# CardGeneratorAngular
+# Card Generator Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+This project is the frontend for a website that generates images of cards based on user-provided information. Built with Angular and styled using SCSS and Bootstrap, it communicates with an ASP.NET backend (available in a separate GitHub repository) to process data and generate the card images.
+
+## Environment Setup
+
+Environment variables for the application are defined in `environments/environment.ts`. During development, Angular automatically uses `environments/environment.development.ts` as a replacement to provide development-specific settings.
+
+## Card Generation Details
+
+### Card Variants
+
+Cards in this application are categorized as either **regular cards** or **nebula cards**:
+
+- **Regular Cards**: Represent warriors that are placed on the field.
+- **Nebula Cards**: Serve as support cards, which can either assist allied warriors or apply negative effects to enemy warriors.
+
+### Card Types
+
+Each card can be assigned a **type**, typically corresponding to an element such as fire, water, or earth. Types help define the card's characteristics and interactions.
+
+Below is a screenshot of the card types management page, where all existing types are listed and new types can be created:
+
+_IMAGE PLACEHOLDER_
+
+The following screenshot shows the card type creation modal. This interface allows users to upload a representative image for the type, select a background gradient, and choose text colors. These color settings apply only to regular cards, as nebula cards use a predefined color palette.
+
+_IMAGE PLACEHOLDER_
+
+> **Note:** Assigning a type is mandatory for regular cards but optional for nebula cards.
 
 ## Development server
 
