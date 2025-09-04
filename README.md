@@ -29,6 +29,30 @@ _IMAGE PLACEHOLDER_
 
 > **Note:** Assigning a type is mandatory for regular cards but optional for nebula cards.
 
+### Cards
+
+Each card in the application is defined by a set of properties, which vary depending on whether the card is a **regular card** or a **nebula card**. The table below outlines the available properties and their requirements for each card variant:
+
+| Property Name | Description | Regular Card | Nebula Card |
+| :-----------: | :---------- | :----------: | :---------: |
+| **Name** | The display name of the card | Required | Required |
+| **Card Number** | Unique numerical identifier for the card | Required | Required |
+| **Card Type** | User-defined type (see [Card Types](#card-types)) | Required | Optional |
+| **Level** | Indicates the warrior's power level | Required | Not Applicable |
+| **Attack** | Amount of attack damage | Required | Not Applicable |
+| **Health** | Amount of health points | Required | Not Applicable |
+| **Quote** | A short quote displayed beneath the card image | Optional | Optional |
+| **Effect** | Special effect applied during gameplay | Optional | Required |
+| **Card Image** | Image displayed at the top of the card | Optional | Optional |
+
+Below is a screenshot of the card management page, which provides a paginated list of all cards and allows users to create new cards:
+
+_IMAGE PLACEHOLDER_
+
+The following screenshots demonstrate the card creation modal for both regular and nebula cards:
+
+_IMAGE PLACEHOLDER_
+
 ## Development server
 
 To start a local development server, run:
