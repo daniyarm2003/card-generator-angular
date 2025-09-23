@@ -19,13 +19,13 @@ Cards in this application are categorized as either **regular cards** or **nebul
 
 Each card can be assigned a **type**, typically corresponding to an element such as fire, water, or earth. Types help define the card's characteristics and interactions.
 
-Below is a screenshot of the card types management page, where all existing types are listed and new types can be created:
+Below is a screenshot of the card type management page, where all existing types are listed and new types can be created:
 
-_IMAGE PLACEHOLDER_
+![Card type management page](./readme-images/type-list.png)
 
 The following screenshot shows the card type creation modal. This interface allows users to upload a representative image for the type, select a background gradient, and choose text colors. These color settings apply only to regular cards, as nebula cards use a predefined color palette.
 
-_IMAGE PLACEHOLDER_
+![Crd type creation modal](./readme-images/type-creation.png)
 
 > **Note:** Assigning a type is mandatory for regular cards but optional for nebula cards.
 
@@ -47,11 +47,11 @@ Each card in the application is defined by a set of properties, which vary depen
 
 Below is a screenshot of the card management page, which provides a paginated list of all cards and allows users to create new cards:
 
-_IMAGE PLACEHOLDER_
+![Card management page](./readme-images/card-list.png)
 
 The following screenshots demonstrate the card creation modal for both regular and nebula cards:
 
-_IMAGE PLACEHOLDER_
+![Card creation modal](./readme-images/card-creation.png)
 
 ## Development server
 
