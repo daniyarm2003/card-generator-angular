@@ -208,7 +208,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
       return this.trackedFileService.getFileDownloadUrl(card.displayImageId);
     }
 
-    return 'https://placehold.co/400';
+    return './assets/card-default.png';
   }
 
   public getCardPreviewProps(): CardPreviewProps {
