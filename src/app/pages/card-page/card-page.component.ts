@@ -83,6 +83,12 @@ export class CardPageComponent implements OnInit {
     this.cardToEdit = undefined;
   }
 
+  public onDeleteCard(card: CardDTO) {
+    if(window.confirm(`Are you sure you would like to delete ${card.name}?`)) {
+      this.onDeleteCardSubmit(card);
+    }
+  }
+
   public onPaginationPropsChange(pageNum: number, pageSize: number) {
     this.cardsLoading = true;
 
@@ -184,5 +190,17 @@ export class CardPageComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  public onDeleteCardSubmit(card: CardDTO) {
+    this.cardService.deleteCard(card.id).subscribe({
+      next: () => {
+        this.refreshCards();
+      },
+      error: (err) => {
+        window.alert('An error occurred while deleting the card');
+        console.error(err);
+      }
+    })
   }
 }

@@ -1,5 +1,5 @@
 <div>
-    <app-default-layout title="Types">
+    <app-default-layout pageTitle="Types">
         <div *ngIf="!cardTypesLoading; else typesLoading">
             <div class="container-fluid d-flex flex-row gap-2 mb-3 flex-wrap justify-content-center">
                 <app-type-display *ngFor="let cardType of getNonEmptyCardTypes()" [type]="cardType" (editClick)="handleTypeEditClick(cardType)" [lastImageUpdateTime]="lastImageUpdateTime" />

@@ -17,8 +17,13 @@ export class CardListComponent {
   public lastCardUpdateTime = input.required<Date>();
 
   public onEditCard = output<CardDTO>();
+  public onDeleteCard = output<CardDTO>();
 
   public handleEditCard(card: CardDTO) {
     this.onEditCard.emit(card);
+  }
+
+  public handleDeleteCard(card: CardDTO) {
+    this.onDeleteCard.emit(card);
   }
 }

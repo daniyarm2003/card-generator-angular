@@ -16,6 +16,7 @@ export class CardDisplayComponent {
   public lastCardUpdateTime = input.required<Date>();
 
   public onEdit = output<CardDTO>();
+  public onDelete = output<CardDTO>();
 
   public constructor(private trackedFileService: TrackedFileService) {}
 
@@ -42,6 +43,10 @@ export class CardDisplayComponent {
 
   public handleEditClick() {
     this.onEdit.emit(this.card());
+  }
+
+  public handleDeleteClick() {
+    this.onDelete.emit(this.card());
   }
 
   public getButtonStyle() {

@@ -43,4 +43,8 @@ export class CardService {
   public generateCardImage(id: string) {
     return this.httpClient.patch<CardDTO>(`${this.baseUrl}/${id}/card-image/update`, {});
   }
+
+  public deleteCard(id: string) {
+    return this.httpClient.delete<CardDTO>(`${this.baseUrl}/${id}`);
+  }
 }

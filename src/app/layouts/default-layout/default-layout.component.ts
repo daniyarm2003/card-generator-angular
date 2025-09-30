@@ -12,5 +12,5 @@ export class DefaultLayoutComponent {
   @Input({
     required: true
   })
-  public title!: string;
+  public pageTitle!: string;
 }
