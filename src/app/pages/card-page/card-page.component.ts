@@ -111,22 +111,22 @@ export class CardPageComponent implements OnInit {
           return of(card);
         }
 
-        return this.cardService.updateCardImage(card.id, submission.imageFile);
-      }),
-      catchError((err, caught) => {
-        window.alert('An error occurred while updating the card image');
-        console.error(err);
+        return this.cardService.updateCardImage(card.id, submission.imageFile)
+          .pipe(catchError(err => {
+            window.alert('An error occurred while updating the card image');
+            console.error(err);
 
-        return caught;
+            return of(card);
+          }));
       }),
       concatMap(card => {
-        return this.cardService.generateCardImage(card.id);
-      }),
-      catchError((err, caught) => {
-        window.alert('An error occurred while generating the card image');
-        console.error(err);
+        return this.cardService.generateCardImage(card.id)
+          .pipe(catchError(err => {
+            window.alert('An error occurred while generating the card image');
+            console.error(err);
 
-        return caught;
+            return of(card);
+          }));
       }),
       finalize(() => {
         this.cardModalSubmitLoading = false;
