@@ -6,5 +6,6 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 export const routes: Routes = [
     { path: '', component: MainPageComponent },
     { path: 'cards', component: CardPageComponent },
-    { path: 'types', component: TypesPageComponent }
+    { path: 'types', component: TypesPageComponent },
+    { path: '**', redirectTo: '' }
 ];
