@@ -5,6 +5,7 @@ export interface CardTypeDTO {
     textColor: string;
     name: string;
     imageFileId?: string;
+    imageFileReadURL?: string;
 }
 
 export interface CardTypeCreationDTO {

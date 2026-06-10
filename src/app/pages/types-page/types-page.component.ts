@@ -6,8 +6,9 @@ import { TypeDisplayComponent } from './type-display/type-display.component';
 import { DefaultLayoutComponent } from '../../layouts/default-layout/default-layout.component';
 import { TypeEditModalComponent } from './type-edit-modal/type-edit-modal.component';
 import { AddTypeSubmission, EditTypeSubmission } from './utilTypes';
-import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
+import { catchError, concatMap, finalize, of, switchMap, throwError } from 'rxjs';
 import { PageLoadingIconComponent } from '../../components/page-loading-icon/page-loading-icon.component';
+import { S3HelperService } from '../../services/s3-helper.service';
 
 @Component({
   selector: 'app-types-page',
@@ -25,7 +26,7 @@ export class TypesPageComponent implements OnInit {
 
   public lastImageUpdateTime = new Date();
 
-  public constructor(private cardTypeService: CardTypeService) { }
+  public constructor(private cardTypeService: CardTypeService, private s3HelperService: S3HelperService) { }
 
   ngOnInit() {
     this.cardTypesLoading = true;
@@ -61,6 +62,37 @@ export class TypesPageComponent implements OnInit {
     this.showEditModal = false;
   }
 
+  private getImageUpdateObservable(type: CardTypeDTO, imageFile: File) {
+    return this.cardTypeService.createCardTypeImageUploadUrl(type.id, imageFile.name).pipe(
+      concatMap((uploadUrlRes) => {
+        return this.s3HelperService.putToPresignedUrl(uploadUrlRes.uploadURL, imageFile, uploadUrlRes.contentType).pipe(
+          concatMap(() => {
+            return this.cardTypeService.getCardTypeById(type.id).pipe(
+              catchError((err) => {
+                window.alert('An error has occurred while trying to retrieve the created type after uploading the image');
+                console.error(err);
+
+                return of(type);
+              })
+            );
+          }),
+          catchError((err) => {
+            window.alert('An error has occurred while trying to upload the image for the type');
+            console.error(err);
+
+            return of(type);
+          })
+        )
+      }),
+      catchError((err) => {
+        window.alert('An error has occurred while trying to create an image for the type');
+        console.error(err);
+
+        return of(type);
+      })
+    );
+  }
+
   public onAddType({ typeData, imageFile }: AddTypeSubmission) {
     const typeCreation$ = this.cardTypeService.createCardType(typeData);
 
@@ -74,16 +106,11 @@ export class TypesPageComponent implements OnInit {
           return of(createdType);
         }
 
-        return this.cardTypeService.updateCardTypeImage(createdType.id, imageFile);
-      }),
-      catchError((err, caught) => {
-        window.alert('An error has occurred while trying to create an image for the type');
-        console.error(err);
-
-        return caught;
+        return this.getImageUpdateObservable(createdType, imageFile);
       }),
       finalize(() => this.showEditModal = false)
-    ).subscribe({
+    )
+    .subscribe({
       next: (createdType) => {
         this.cardTypes.push(createdType);
       },
@@ -105,13 +132,7 @@ export class TypesPageComponent implements OnInit {
         }
 
         this.lastImageUpdateTime = new Date();
-        return this.cardTypeService.updateCardTypeImage(updatedType.id, imageFile)
-          .pipe(catchError(err => {
-            window.alert('An error has occurred while trying to update the image for the type');
-            console.error(err);
-
-            return of(updatedType);
-          }));
+        return this.getImageUpdateObservable(updatedType, imageFile);
       }),
       finalize(() => this.showEditModal = false)
     ).subscribe({

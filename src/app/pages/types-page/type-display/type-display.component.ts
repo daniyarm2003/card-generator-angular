@@ -34,8 +34,8 @@ export class TypeDisplayComponent {
   }
 
   public getImageUrl() {
-    if(this.type.imageFileId) {
-      return this.trackedFileService.getFileDownloadUrl(this.type.imageFileId) + `?t=${this.lastImageUpdateTime.getTime()}`;
+    if(this.type.imageFileReadURL) {
+      return this.type.imageFileReadURL + `?t=${this.lastImageUpdateTime.getTime()}`;
     }
 
     return './assets/none-type.png';

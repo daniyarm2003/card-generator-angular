@@ -96,8 +96,8 @@ export class TypeEditModalComponent implements OnChanges, OnDestroy {
       return this.selectedImageFileBlobUrl;
     }
 
-    if(this.cardType?.imageFileId) {
-      return this.trackedFileService.getFileDownloadUrl(this.cardType.imageFileId);
+    if(this.cardType?.imageFileReadURL) {
+      return this.cardType.imageFileReadURL;
     }
 
     return './assets/none-type.png';
