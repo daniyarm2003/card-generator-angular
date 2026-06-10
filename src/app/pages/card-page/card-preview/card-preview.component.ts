@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { CardPreviewProps, NEBULA_BACKGROUND_COLOR_INNER, NEBULA_BACKGROUND_COLOR_OUTER, NEBULA_TEXT_COLOR } from '../utils';
-import { TrackedFileService } from '../../../services/tracked-file.service';
 import { CommonModule } from '@angular/common';
 import { CARD_TYPE_NONE_ID } from '../../../types/cardTypeDTO';
 
@@ -13,11 +12,11 @@ import { CARD_TYPE_NONE_ID } from '../../../types/cardTypeDTO';
 export class CardPreviewComponent {
   public previewProps = input.required<CardPreviewProps>();
 
-  public constructor(private trackedFileService: TrackedFileService) {}
+  public constructor() {}
 
   public getTypeImageUrl() {
     const type = this.previewProps().type;
-    return type.imageFileId ? this.trackedFileService.getFileDownloadUrl(type.imageFileId) : './assets/none-type.png';
+    return type.imageFileReadURL ?? './assets/none-type.png';
   }
 
   public getTextColor() {

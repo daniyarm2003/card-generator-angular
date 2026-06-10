@@ -12,6 +12,7 @@ import { CardTypeService } from '../../services/card-type.service';
 import { CardTypeDTO } from '../../types/cardTypeDTO';
 import { AddCardSubmission, CardUpdateSubmission } from './utils';
 import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
+import { S3HelperService } from '../../services/s3-helper.service';
 
 @Component({
   selector: 'app-card-page',
@@ -37,7 +38,7 @@ export class CardPageComponent implements OnInit {
 
   public lastCardUpdateTime: Date = new Date();
 
-  constructor(private cardService: CardService, private cardTypeService: CardTypeService) { }
+  constructor(private cardService: CardService, private cardTypeService: CardTypeService, private s3HelperService: S3HelperService) { }
 
   ngOnInit() {
     this.refreshCards();
@@ -98,6 +99,37 @@ export class CardPageComponent implements OnInit {
     this.refreshCards();
   }
 
+  private getDisplayImageUploadObservable(card: CardDTO, imageFile: File) {
+    return this.cardService.createCardDisplayImageUploadUrl(card.id, imageFile.name).pipe(
+      concatMap(uploadUrlRes => this.s3HelperService.putToPresignedUrl(uploadUrlRes.uploadURL, imageFile, uploadUrlRes.contentType).pipe(
+        concatMap(() => of(card)),
+        catchError(err => {
+          window.alert('An error has occurred while trying to upload the display image for the card');
+          console.error(err);
+
+          return of(card);
+        })
+      )),
+      catchError(err => {
+        window.alert('An error has occurred while trying to create a display image for the card');
+        console.error(err);
+
+        return of(card);
+      })
+    );
+  }
+
+  private getCardImageUpdateObservable(card: CardDTO) {
+    return this.cardService.generateCardImage(card.id).pipe(
+      catchError(err => {
+        window.alert('An error has occurred while trying to generate the card image');
+        console.error(err);
+
+        return of(card);
+      })
+    );
+  }
+
   public onAddCardSubmit(submission: AddCardSubmission) {
     this.cardModalSubmitLoading = true;
     
@@ -111,23 +143,9 @@ export class CardPageComponent implements OnInit {
           return of(card);
         }
 
-        return this.cardService.updateCardImage(card.id, submission.imageFile)
-          .pipe(catchError(err => {
-            window.alert('An error occurred while updating the card image');
-            console.error(err);
-
-            return of(card);
-          }));
+        return this.getDisplayImageUploadObservable(card, submission.imageFile);
       }),
-      concatMap(card => {
-        return this.cardService.generateCardImage(card.id)
-          .pipe(catchError(err => {
-            window.alert('An error occurred while generating the card image');
-            console.error(err);
-
-            return of(card);
-          }));
-      }),
+      concatMap(card => this.getCardImageUpdateObservable(card)),
       finalize(() => {
         this.cardModalSubmitLoading = false;
         this.showCardModal = false;
@@ -155,23 +173,9 @@ export class CardPageComponent implements OnInit {
           return of(card);
         }
 
-        return this.cardService.updateCardImage(card.id, submission.imageFile)
-          .pipe(catchError(err => {
-            window.alert('An error occurred while updating the card image');
-            console.error(err);
-
-            return of(card);
-          }));
+        return this.getDisplayImageUploadObservable(card, submission.imageFile);
       }),
-      concatMap(card => {
-        return this.cardService.generateCardImage(card.id)
-          .pipe(catchError(err => {
-            window.alert('An error occurred while generating the card image');
-            console.error(err);
-
-            return of(card);
-          }));
-      }),
+      concatMap(card => this.getCardImageUpdateObservable(card)),
       finalize(() => {
         this.cardModalSubmitLoading = false;
         this.showCardModal = false;

@@ -15,7 +15,8 @@ export interface CardDTO {
     createdAt: Date;
     type: CardTypeDTO;
     displayImageId?: string;
-    cardImageId?: string;
+    displayImageURL?: string;
+    cardImageURL?: string;
 }
 
 export interface CardCreationDTO {

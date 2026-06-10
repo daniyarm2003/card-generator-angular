@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTypeDTO } from '../../../types/cardTypeDTO';
-import { TrackedFileService } from '../../../services/tracked-file.service';
 
 @Component({
   selector: 'app-type-display',
@@ -23,7 +22,7 @@ export class TypeDisplayComponent {
   @Output()
   public editClick: EventEmitter<any> = new EventEmitter();
 
-  public constructor(private trackedFileService: TrackedFileService) {}
+  public constructor() {}
 
   public getTypeBackgroundStyle() {
     return `background: radial-gradient(#${this.type.backgroundColorHexCode1}, #${this.type.backgroundColorHexCode2});`;
@@ -35,7 +34,7 @@ export class TypeDisplayComponent {
 
   public getImageUrl() {
     if(this.type.imageFileReadURL) {
-      return this.type.imageFileReadURL + `?t=${this.lastImageUpdateTime.getTime()}`;
+      return this.type.imageFileReadURL;
     }
 
     return './assets/none-type.png';

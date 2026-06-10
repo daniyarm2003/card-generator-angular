@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CardTypeDTO } from '../../../types/cardTypeDTO';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TrackedFileService } from '../../../services/tracked-file.service';
 import { TypeEditPreviewComponent } from '../../../components/type-edit-preview/type-edit-preview.component';
 import { AddTypeSubmission, EditTypeSubmission } from '../utilTypes';
 
@@ -42,7 +41,7 @@ export class TypeEditModalComponent implements OnChanges, OnDestroy {
   public selectedImageFile?: File;
   public selectedImageFileBlobUrl?: string;
 
-  public constructor(private trackedFileService: TrackedFileService) {}
+  public constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes['show'] && !changes['show'].isFirstChange()) {

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { CardDTO } from '../../../types/cardDTO';
-import { TrackedFileService } from '../../../services/tracked-file.service';
 import { NEBULA_BACKGROUND_COLOR_INNER, NEBULA_BACKGROUND_COLOR_OUTER, NEBULA_TEXT_COLOR } from '../utils';
 
 @Component({
@@ -18,11 +17,11 @@ export class CardDisplayComponent {
   public onEdit = output<CardDTO>();
   public onDelete = output<CardDTO>();
 
-  public constructor(private trackedFileService: TrackedFileService) {}
+  public constructor() {}
 
   public getCardImageUrl() {
-    const { cardImageId } = this.card();
-    return cardImageId ? this.trackedFileService.getFileDownloadUrl(cardImageId) + `?t=${this.lastCardUpdateTime().getTime()}` : 'https://placehold.co/400';
+    const { cardImageURL } = this.card();
+    return cardImageURL ?? 'https://placehold.co/400';
   }
 
   public getCardStyle() {

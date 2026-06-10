@@ -3,7 +3,6 @@ import { Component, ElementRef, input, OnChanges, OnDestroy, OnInit, output, Sim
 import { CardCreationDTO, CardDTO, CardUpdateDTO, CardVariant } from '../../../types/cardDTO';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CARD_TYPE_NONE_ID, CardTypeDTO } from '../../../types/cardTypeDTO';
-import { TrackedFileService } from '../../../services/tracked-file.service';
 import { Subscription } from 'rxjs';
 import { CardPreviewComponent } from "../card-preview/card-preview.component";
 import { AddCardSubmission, CardPreviewProps, CardUpdateSubmission } from '../utils';
@@ -47,7 +46,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
     typeId: new FormControl(CARD_TYPE_NONE_ID),
   });
 
-  public constructor(private trackedFileService: TrackedFileService) {}
+  public constructor() {}
 
   ngOnInit() {
     const variantControl = this.cardForm.get('variant');
@@ -150,11 +149,7 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public getCardTypeImageUrl(type: CardTypeDTO) {
-    if(type.imageFileId) {
-      return this.trackedFileService.getFileDownloadUrl(type.imageFileId);
-    }
-
-    return './assets/none-type.png';
+    return type.imageFileReadURL ?? './assets/none-type.png';
   }
 
   public getNoneCardType() {
@@ -204,8 +199,8 @@ export class CardEditModalComponent implements OnInit, OnChanges, OnDestroy {
 
     const card = this.card();
 
-    if(card?.displayImageId) {
-      return this.trackedFileService.getFileDownloadUrl(card.displayImageId);
+    if(card?.displayImageURL) {
+      return card.displayImageURL;
     }
 
     return './assets/card-default.png';

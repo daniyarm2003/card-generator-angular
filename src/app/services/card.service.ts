@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CardCreationDTO, CardDTO, CardUpdateDTO } from '../types/cardDTO';
 import { PaginationDTO } from '../types/paginationDTO';
+import { UploadUrlResponseDTO } from '../types/uploadUrlResponseDto';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,10 @@ export class CardService {
     return this.httpClient.patch<CardDTO>(`${this.baseUrl}/${id}`, dto);
   }
 
+  public createCardDisplayImageUploadUrl(id: string, fileName: string) {
+    return this.httpClient.post<UploadUrlResponseDTO>(`${this.baseUrl}/${id}/display-image/upload-url`, { fileName });
+  }
+
   public updateCardImage(id: string, file: File) {
     const formData = new FormData();
     formData.append('imageFile', file);
@@ -41,7 +46,7 @@ export class CardService {
   }
 
   public generateCardImage(id: string) {
-    return this.httpClient.patch<CardDTO>(`${this.baseUrl}/${id}/card-image/update`, {});
+    return this.httpClient.post<CardDTO>(`${this.baseUrl}/${id}/card-image/update`, {});
   }
 
   public deleteCard(id: string) {

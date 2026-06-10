@@ -66,16 +66,14 @@ export class TypesPageComponent implements OnInit {
     return this.cardTypeService.createCardTypeImageUploadUrl(type.id, imageFile.name).pipe(
       concatMap((uploadUrlRes) => {
         return this.s3HelperService.putToPresignedUrl(uploadUrlRes.uploadURL, imageFile, uploadUrlRes.contentType).pipe(
-          concatMap(() => {
-            return this.cardTypeService.getCardTypeById(type.id).pipe(
-              catchError((err) => {
-                window.alert('An error has occurred while trying to retrieve the created type after uploading the image');
-                console.error(err);
+          concatMap(() => this.cardTypeService.getCardTypeById(type.id).pipe(
+            catchError((err) => {
+              window.alert('An error has occurred while trying to retrieve the created type after uploading the image');
+              console.error(err);
 
-                return of(type);
-              })
-            );
-          }),
+              return of(type);
+            })
+          )),
           catchError((err) => {
             window.alert('An error has occurred while trying to upload the image for the type');
             console.error(err);
