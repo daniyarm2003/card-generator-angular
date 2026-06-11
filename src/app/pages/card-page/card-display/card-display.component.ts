@@ -12,8 +12,6 @@ import { NEBULA_BACKGROUND_COLOR_INNER, NEBULA_BACKGROUND_COLOR_OUTER, NEBULA_TE
 export class CardDisplayComponent {
   public card = input.required<CardDTO>();
 
-  public lastCardUpdateTime = input.required<Date>();
-
   public onEdit = output<CardDTO>();
   public onDelete = output<CardDTO>();
 

@@ -36,8 +36,6 @@ export class CardPageComponent implements OnInit {
 
   public cardModalSubmitLoading = false;
 
-  public lastCardUpdateTime: Date = new Date();
-
   constructor(private cardService: CardService, private cardTypeService: CardTypeService, private s3HelperService: S3HelperService) { }
 
   ngOnInit() {
@@ -62,7 +60,6 @@ export class CardPageComponent implements OnInit {
 
     this.cardService.getCardsPaginated(this.cardPageNum, this.cardPageSize).subscribe({
       next: (data) => {
-        this.lastCardUpdateTime = new Date();
         this.cards = data;
       },
       error: (err) => {
@@ -187,7 +184,6 @@ export class CardPageComponent implements OnInit {
           return;
         }
 
-        this.lastCardUpdateTime = new Date();
         this.cards.data = this.cards.data.map(card => card.id === updatedCard.id ? updatedCard : card);
       },
       error: (err) => {

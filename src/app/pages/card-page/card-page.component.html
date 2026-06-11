@@ -3,8 +3,7 @@
         <div *ngIf="!cardsLoading && !cardTypesLoading && cards; else loadingIcon">
             <app-card-list 
                 [cards]="cards.data" 
-                [cardsLoading]="cardsLoading" 
-                [lastCardUpdateTime]="lastCardUpdateTime" 
+                [cardsLoading]="cardsLoading"
                 (onEditCard)="openCardModal($event)"
                 (onDeleteCard)="onDeleteCard($event)"
                 />

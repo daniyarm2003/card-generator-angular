@@ -14,8 +14,6 @@ export class CardListComponent {
   public cardsLoading = input.required<boolean>();
   public cards = input.required<CardDTO[]>();
 
-  public lastCardUpdateTime = input.required<Date>();
-
   public onEditCard = output<CardDTO>();
   public onDeleteCard = output<CardDTO>();
 
