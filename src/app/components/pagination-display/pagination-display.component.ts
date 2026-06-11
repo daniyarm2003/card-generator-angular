@@ -84,28 +84,15 @@ export class PaginationDisplayComponent<T> {
   }
 
   public shouldDisplayFirstPageOption() {
-    const curPage = this.getCurrentPageNum();
-    const leftBound = Math.max(curPage - Math.floor(this.visiblePageCount / 2), 1);
-
-    return leftBound > 1;
+    return this.getFirstDisplayedPageNum() > 1;
   }
 
   public shouldDisplayEllipses(firstPage: boolean) {
-    const curPage = this.getCurrentPageNum();
-    const lastPage = this.getLastPage();
-
-    const leftBound = Math.max(curPage - Math.floor(this.visiblePageCount / 2), 1);
-    const rightBound = Math.min(curPage + Math.floor(this.visiblePageCount / 2), lastPage);
-
-    return firstPage ? leftBound > 2 : rightBound < lastPage - 1;
+    return firstPage ? this.getFirstDisplayedPageNum() > 2 : this.getLastDisplayedPageNum() < this.getLastPage() - 1;
   }
 
   public shouldDisplayLastPageOption() {
-    const curPage = this.getCurrentPageNum();
-    const lastPage = this.getLastPage();
-    const rightBound = Math.min(curPage + Math.floor(this.visiblePageCount / 2), lastPage);
-
-    return rightBound < lastPage;
+    return this.getLastDisplayedPageNum() < this.getLastPage();
   }
 
   public setPageNum(pageNum: number, absolute: boolean) {
