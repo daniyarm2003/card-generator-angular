@@ -1,5 +1,10 @@
 <div>
     <app-default-layout pageTitle="Cards">
+        <app-search-bar 
+            class="card-search-bar" 
+            (onBeginQueryChange)="onSearchQueryChangeBegin()"
+            (onQueryChange)="onSearchQueryChange($event)"
+            />
         <div *ngIf="!cardsLoading && !cardTypesLoading && cards; else loadingIcon">
             <app-card-list 
                 [cards]="cards.data" 
@@ -10,7 +15,7 @@
             <app-pagination-display 
                 [dataLoading]="cardsLoading" 
                 [paginationData]="cards" 
-                (onSetPageNum)="onPaginationPropsChange($event, cardPageSize)"
+                (onSetPageNum)="onPaginationPropsChange($event, searchFilters.pageSize!)"
                 (onSetPageSize)="onPaginationPropsChange(1, $event)"
                 />
             <button class="btn btn-primary create-card-button" (click)="openCardModal()">Create Card</button>

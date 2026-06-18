@@ -3,7 +3,7 @@ import { DefaultLayoutComponent } from "../../layouts/default-layout/default-lay
 import { PageLoadingIconComponent } from "../../components/page-loading-icon/page-loading-icon.component";
 import { CommonModule } from '@angular/common';
 import { CardService } from '../../services/card.service';
-import { CardDTO } from '../../types/cardDTO';
+import { CardDTO, CardQueryDTO } from '../../types/cardDTO';
 import { PaginationDTO } from '../../types/paginationDTO';
 import { PaginationDisplayComponent } from "../../components/pagination-display/pagination-display.component";
 import { CardListComponent } from "./card-list/card-list.component";
@@ -13,11 +13,12 @@ import { CardTypeDTO } from '../../types/cardTypeDTO';
 import { AddCardSubmission, CardUpdateSubmission } from './utils';
 import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
 import { S3HelperService } from '../../services/s3-helper.service';
+import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 
 @Component({
   selector: 'app-card-page',
-  imports: [DefaultLayoutComponent, PageLoadingIconComponent, PageLoadingIconComponent, CommonModule, PaginationDisplayComponent, 
-    PaginationDisplayComponent, CardListComponent, CardEditModalComponent],
+  imports: [DefaultLayoutComponent, PageLoadingIconComponent, PageLoadingIconComponent, CommonModule, PaginationDisplayComponent,
+    PaginationDisplayComponent, CardListComponent, CardEditModalComponent, SearchBarComponent],
   templateUrl: './card-page.component.html',
   styleUrl: './card-page.component.scss'
 })
@@ -28,8 +29,10 @@ export class CardPageComponent implements OnInit {
   public cards?: PaginationDTO<CardDTO>;
   public cardTypes: CardTypeDTO[] = [];
 
-  public cardPageNum = 1;
-  public cardPageSize = 30;
+  public searchFilters: CardQueryDTO = {
+    pageNum: 1,
+    pageSize: 30
+  };
 
   public showCardModal = false;
   public cardToEdit?: CardDTO;
@@ -58,7 +61,7 @@ export class CardPageComponent implements OnInit {
   private refreshCards() {
     this.cardsLoading = true;
 
-    this.cardService.getCardsPaginated(this.cardPageNum, this.cardPageSize).subscribe({
+    this.cardService.getCards(this.searchFilters).subscribe({
       next: (data) => {
         this.cards = data;
       },
@@ -90,8 +93,23 @@ export class CardPageComponent implements OnInit {
   public onPaginationPropsChange(pageNum: number, pageSize: number) {
     this.cardsLoading = true;
 
-    this.cardPageNum = pageNum;
-    this.cardPageSize = pageSize;
+    this.searchFilters.pageNum = pageNum;
+    this.searchFilters.pageSize = pageSize;
+
+    this.refreshCards();
+  }
+
+  public onSearchQueryChangeBegin() {
+    this.cardsLoading = true;
+  }
+
+  public onSearchQueryChange(searchQuery: string | null) {
+    if(searchQuery !== null) {
+      this.searchFilters.searchQuery = searchQuery ?? undefined;
+    }
+    else {
+      delete this.searchFilters.searchQuery;
+    }
 
     this.refreshCards();
   }

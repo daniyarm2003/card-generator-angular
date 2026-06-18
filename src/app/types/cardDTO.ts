@@ -32,3 +32,11 @@ export interface CardCreationDTO {
 }
 
 export type CardUpdateDTO = Partial<Omit<CardCreationDTO, 'variant'>>;
+
+export interface CardQueryDTO {
+    pageSize?: number;
+    pageNum?: number;
+    variant?: CardVariant;
+    level?: number;
+    searchQuery?: string;
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { CardCreationDTO, CardDTO, CardUpdateDTO } from '../types/cardDTO';
+import { CardCreationDTO, CardDTO, CardQueryDTO, CardUpdateDTO } from '../types/cardDTO';
 import { PaginationDTO } from '../types/paginationDTO';
 import { UploadUrlResponseDTO } from '../types/uploadUrlResponseDto';
 
@@ -13,17 +13,10 @@ export class CardService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllCards() {
-    return this.httpClient.get<CardDTO[]>(this.baseUrl);
-  }
-
-  public getCardsPaginated(pageNum: number, pageSize: number) {
+  public getCards(queryDTO: CardQueryDTO) {
     return this.httpClient.get<PaginationDTO<CardDTO>>(this.baseUrl, {
-      params: {
-        pageNum, 
-        pageSize
-      }
-    });
+      params: { ...queryDTO }
+    })
   }
 
   public createCard(dto: CardCreationDTO) {
