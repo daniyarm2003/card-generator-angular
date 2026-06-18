@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnDestroy, OnInit, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, Subscription } from 'rxjs';
+import { debounceTime, map, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -37,8 +37,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
     this.searchQueryChangeSubscription = this.searchQueryControl.valueChanges.pipe(
       map(query => this.sanitizeQuery(query)),
-      debounceTime(this.debounceMillis()),
-      distinctUntilChanged()
+      debounceTime(this.debounceMillis())
     )
     .subscribe(query => this.onQueryChange.emit(query));
   }

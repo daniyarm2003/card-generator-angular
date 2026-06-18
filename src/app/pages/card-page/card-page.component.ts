@@ -111,6 +111,8 @@ export class CardPageComponent implements OnInit {
       delete this.searchFilters.searchQuery;
     }
 
+    this.searchFilters.pageNum = 1;
+
     this.refreshCards();
   }
 
