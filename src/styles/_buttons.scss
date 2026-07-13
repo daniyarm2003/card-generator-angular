@@ -1,0 +1,21 @@
+@use '../../node_modules/bootstrap/scss/bootstrap.scss' as bootstrap;
+@use 'variables' as *;
+
+@mixin themed-button($background, $text-color, $border-shade: 30%, $active-border-shade: 30%) {
+    @include bootstrap.button-variant(
+        $background,
+        darken($background, $border-shade),
+        $text-color,
+        lighten($background, 5%),
+        lighten($background, 10%),
+        darken($background, $active-border-shade)
+    );
+}
+
+.btn-primary {
+    @include themed-button($primary, $primary-text-color);
+}
+
+.btn-secondary {
+    @include themed-button($secondary, $secondary-text-color, 5%);
+}

@@ -1,6 +1,6 @@
 # Card Generator Angular
 
-This project is the frontend for a website that generates images of cards based on user-provided information. Built with Angular and styled using SCSS and Bootstrap, it communicates with an ASP.NET backend (available in a separate GitHub repository) to process data and generate the card images.
+This project is the frontend for a website that generates images of trading cards based on user-provided information. Built with Angular and styled using SCSS and Bootstrap, it communicates with an [ASP.NET backend](https://github.com/daniyarm2003/card-generator-backend) to process data and generate the card images. This project uses a GitHub Actions workflow to automatically deploy the frontend by compiling the code and uploading the static files to an S3 bucket referenced by a CloudFront distribution.
 
 ## Environment Setup
 
@@ -25,7 +25,7 @@ Below is a screenshot of the card type management page, where all existing types
 
 The following screenshot shows the card type creation modal. This interface allows users to upload a representative image for the type, select a background gradient, and choose text colors. These color settings apply only to regular cards, as nebula cards use a predefined color palette.
 
-![Crd type creation modal](./readme-images/type-creation.png)
+![Card type creation modal](./readme-images/type-creation.png)
 
 > **Note:** Assigning a type is mandatory for regular cards but optional for nebula cards.
 
